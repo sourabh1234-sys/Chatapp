@@ -20,6 +20,7 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             overflow: hidden;
+            height: 600px; /* Set a fixed height */
         }
         .chat-messages {
             padding: 20px;
@@ -35,16 +36,13 @@
             align-items: center;
         }
         .message p {
-            background-color: #333;
             padding: 12px 18px;
             border-radius: 8px;
             max-width: 80%;
             word-wrap: break-word;
         }
         .message.user p {
-            background-color: #25D366;
-            color: white;
-            align-self: flex-end;
+            color: white; /* Default text color */
         }
         .chat-input {
             padding: 15px;
@@ -96,10 +94,13 @@
     const chatForm = document.getElementById('chat-form');
     const messageInput = document.getElementById('message');
     const chatMessages = document.getElementById('chat-messages');
+    
+    let userMessageCount = 0; // Count of user messages
 
     chatForm.addEventListener('submit', (e) => {
         e.preventDefault();  
         const message = messageInput.value;
+        userMessageCount++;
         socket.emit('message', { message, sender: 'user' });
         messageInput.value = '';
     });
@@ -111,16 +112,29 @@
     function appendMessage(message, sender) {
         const div = document.createElement('div');
         div.classList.add('message');
+        const msgElement = document.createElement('p');
+
         if (sender === 'user') {
-            div.classList.add('user');  
+            msgElement.style.backgroundColor = getUserMessageColor();
+            div.classList.add('user');
+        } else {
+            msgElement.style.backgroundColor = '#25D366'; // Color for other messages
         }
-        div.innerHTML = `<p>${message}</p>`;
+
+        msgElement.innerText = message;
+        div.appendChild(msgElement);
         chatMessages.appendChild(div);
         chatMessages.scrollTop = chatMessages.scrollHeight;  
     }
 
+    function getUserMessageColor() {
+        if (userMessageCount === 1) return '#25D366'; // Green
+        
+        return '#007BFF'; // Red
+    }
+
     setTimeout(() => {
-        socket.emit('message', { message: 'Hi, how can I assist you today?', sender: 'other' });
+        socket.emit('message', { message: 'Hi, ', sender: 'other' });
     }, 2000);
 </script>
 
