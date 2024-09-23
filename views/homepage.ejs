@@ -51,10 +51,11 @@
             background-color: #121212;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             border-top: 2px solid #333;
         }
         .chat-input input {
-            width: 85%;
+            width: 80%;
             padding: 12px;
             border: 1px solid #444;
             border-radius: 6px;
@@ -71,9 +72,6 @@
             font-size: 14px;
             cursor: pointer;
         }
-        .chat-input button:hover {
-            background-color: #22c658;
-        }
     </style>
 </head>
 <body>
@@ -85,7 +83,7 @@
         </div>
     </div>
     <div class="chat-input">
-        <form id="chat-form">
+        <form id="chat-form" style="width: 100%; display: flex;">
             <input type="text" placeholder="Type a message..." id="message" required>
             <button type="submit" id="send-btn">Send</button>
         </form>
