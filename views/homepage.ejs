@@ -14,17 +14,17 @@
         }
         .chat-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             margin: 30px auto;
             background-color: #1E1E1E;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             overflow: hidden;
-            height: 600px; /* Set a fixed height */
+            height: 100vh; /* Set a fixed height */
         }
         .chat-messages {
             padding: 20px;
-            height: 450px;
+            height: 470px;
             overflow-y: auto;
             background-color: #0A0A0A;
             border-bottom: 2px solid #333;
@@ -40,9 +40,6 @@
             border-radius: 8px;
             max-width: 80%;
             word-wrap: break-word;
-        }
-        .message.user p {
-            color: white; /* Default text color */
         }
         .chat-input {
             padding: 15px;
@@ -70,6 +67,13 @@
             font-size: 14px;
             cursor: pointer;
         }
+        .note {
+            padding: 10px;
+            background-color: #FFCC00;
+            text-align: center;
+            font-weight: bold;
+            color: #000; /* Ensure text is black for visibility */
+        }
     </style>
 </head>
 <body>
@@ -77,7 +81,7 @@
 <div class="chat-container">
     <div class="chat-messages" id="chat-messages">
         <div class="message">
-            <p>Welcome to the chat!</p>
+            <p>Welcome to the chat! This is under working</p>
         </div>
     </div>
     <div class="chat-input">
@@ -85,6 +89,9 @@
             <input type="text" placeholder="Type a message..." id="message" required>
             <button type="submit" id="send-btn">Send</button>
         </form>
+    </div>
+    <div class="note">
+        This is under working.
     </div>
 </div>
 
@@ -115,22 +122,13 @@
         const msgElement = document.createElement('p');
 
         if (sender === 'user') {
-            msgElement.style.backgroundColor = getUserMessageColor();
             div.classList.add('user');
-        } else {
-            msgElement.style.backgroundColor = '#25D366'; // Color for other messages
         }
 
         msgElement.innerText = message;
         div.appendChild(msgElement);
         chatMessages.appendChild(div);
         chatMessages.scrollTop = chatMessages.scrollHeight;  
-    }
-
-    function getUserMessageColor() {
-        if (userMessageCount === 1) return '#25D366'; // Green
-        
-        return '#007BFF'; // Red
     }
 
     setTimeout(() => {
